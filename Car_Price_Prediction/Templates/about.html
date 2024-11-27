@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}About{% endblock title %}
+
+{% block body %}
+
+<body class="bg-light">
+    <div class="container py-5">
+        <!-- Page Header -->
+        <div class="text-center mb-5">
+            <h1 class="display-4 text-primary">About Us</h1>
+            <p class="lead text-secondary">Learn more about our project and the minds behind it.</p>
+        </div>
+
+        <!-- About Section -->
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card shadow-lg mb-4">
+                    <div class="card-body">
+                        <h3 class="text-primary">Our Mission</h3>
+                        <p>
+                            Welcome to the <strong>Car Price Prediction</strong> project! Our mission is to provide an easy-to-use, 
+                            data-driven platform for estimating car resale values. Whether you are a car buyer, seller, or just curious, 
+                            this tool helps you make informed decisions by leveraging advanced machine learning models.
+                        </p>
+                        <h3 class="text-primary mt-4">Why Choose Us?</h3>
+                        <ul>
+                            <li>Accurate price predictions based on multiple parameters like brand, year, mileage, and more.</li>
+                            <li>Simple and intuitive interface designed for everyone.</li>
+                            <li>Built with state-of-the-art technologies to ensure reliability and speed.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- About the Developer -->
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                        <h3 class="text-primary">Meet the Developer</h3>
+                        <div class="row align-items-center">
+                            <div class="col-md-4 text-center">
+                                <!-- Developer Profile Image -->
+                                <img src="\static\myimg.png" alt="Developer Profile" class="rounded-circle img-fluid shadow-sm mb-3">
+                            </div>
+                            <div class="col-md-8">
+                                <h4 class="mb-2">Sidhant Naik</h4>
+                                <p>
+                                    Hi! I'm Sidhant Naik, the developer behind this project. With a passion for technology and problem-solving, 
+                                    I created this tool to simplify the process of evaluating car resale values. My goal is to make predictive analytics 
+                                    accessible and user-friendly for everyone.
+                                </p>
+                                <p class="text-muted">
+                                    Feel free to reach out with suggestions, feedback, or collaboration ideas!
+                                </p>
+                                <p>
+                                    <a href="mailto:your_email@example.com" class="btn btn-outline-primary btn-sm me-2">Email Me</a>
+                                    <a href="https://www.linkedin.com/in/your-profile" target="_blank" class="btn btn-outline-secondary btn-sm">LinkedIn</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock body %}
+
+
+  

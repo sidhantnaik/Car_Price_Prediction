@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% block title %}Car Price Prediction{% endblock title %}
+
+{% block body %}
+<body class="bg-light">
+    <!-- Main Content Section -->
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 80vh; padding-top: 10px;">
+        <div class="container">
+            <div class="card shadow-lg px-5">
+                <!-- Card Header -->
+                <div class="card-header bg-info text-white text-center">
+                    <h2 class="mx-4">Car Price Prediction</h2>
+                </div> <br>
+                
+                <!-- Card Body with Form -->
+                <div class="card-body">
+                    <form method="post" action="/" class="needs-validation">
+                        {% csrf_token %}
+
+                        <!-- Car Brands Dropdown -->
+                        <div class="form-group mb-4">
+                            <label for="car_brand" class="form-label">Car Brand</label>
+                            <select class="form-control border-primary" name="car_brand" id="car_brand">
+                                <option value="" disabled selected>Select brand name</option>
+                                {% for brand in car_brands %}
+                                <option value="{{ brand }}">{{ brand }}</option>
+                                {% endfor %}
+                            </select>
+                        </div> <br>
+
+                        <!-- Year of Launch -->
+                        <div class="form-group mb-4">
+                            <label for="year" class="form-label">Select Year</label>
+                            <input type="range" name="year" id="year" max="2023" min="1990" class="form-range border-primary" oninput="updateYearValue(this.value)">
+                            <small id="year_value" class="form-text text-muted">Year: 1990</small>
+                        </div> <br>
+
+                        <!-- KM Traveled -->
+                        <div class="form-group mb-4">
+                            <label for="km" class="form-label">KM Traveled</label>
+                            <input type="range" name="km" id="km" max="2500000" min="1" class="form-range border-primary" oninput="updateKmValue(this.value)">
+                            <small id="km_value" class="form-text text-muted">KM: 1</small>
+                        </div> <br>
+
+                        <!-- Fuel Types Dropdown -->
+                        <div class="form-group mb-4">
+                            <label for="fuel_type" class="form-label">Fuel Type</label>
+                            <select class="form-control border-primary" name="fuel_type" id="fuel_type">
+                                <option value="" disabled selected>Select fuel type</option>
+                                {% for fuel in fuel_types %}
+                                <option value="{{ fuel }}">{{ fuel }}</option>
+                                {% endfor %}
+                            </select>
+                        </div> <br>
+
+                        <!-- Seller Types Dropdown -->
+                        <div class="form-group mb-4">
+                            <label for="seller_type" class="form-label">Seller Type</label>
+                            <select class="form-control border-primary" name="seller_type" id="seller_type">
+                                <option value="" disabled selected>Select seller type</option>
+                                {% for seller in seller_type %}
+                                <option value="{{ seller }}">{{ seller }}</option>
+                                {% endfor %}
+                            </select>
+                        </div> <br>
+
+                        <!-- Transmissions Dropdown -->
+                        <div class="form-group mb-4">
+                            <label for="transmission" class="form-label">Transmission</label>
+                            <select class="form-control border-primary" name="transmission" id="transmission">
+                                <option value="" disabled selected>Select transmission type</option>
+                                {% for transmission in transmissions %}
+                                <option value="{{ transmission }}">{{ transmission }}</option>
+                                {% endfor %}
+                            </select>
+                        </div> <br>
+
+                        <!-- Owners Dropdown -->
+                        <div class="form-group mb-4">
+                            <label for="owner" class="form-label">Owner</label>
+                            <select class="form-control border-primary" name="owner" id="owner">
+                                <option value="" disabled selected>Select owner type</option>
+                                {% for owner in owners %}
+                                <option value="{{ owner }}">{{ owner }}</option>
+                                {% endfor %}
+                            </select>
+                        </div> <br>
+
+                        <!-- Mileage -->
+                        <div class="form-group mb-4">
+                            <label for="mileage" class="form-label">Mileage</label>
+                            <input type="range" name="mileage" id="mileage" max="50" min="1" class="form-range border-primary" oninput="updateMileageValue(this.value)">
+                            <small id="mileage_value" class="form-text text-muted">Mileage: 1</small>
+                        </div> <br>
+
+                        <!-- Engines Dropdown -->
+                        <div class="form-group mb-4">
+                            <label for="engine" class="form-label">Engine</label>
+                            <select class="form-control border-primary" name="engine" id="engine">
+                                <option value="" disabled selected>Select engine type</option>
+                                {% for engine in engines %}
+                                <option value="{{ engine }}">{{ engine }}</option>
+                                {% endfor %}
+                            </select>
+                        </div> <br>
+
+                        <!-- Max Power -->
+                        <div class="form-group mb-4">
+                            <label for="max_pow" class="form-label">Max Power</label>
+                            <select class="form-control border-primary" name="max_pow" id="max_pow">
+                                <option value="" disabled selected>Select max power</option>
+                                {% for power in max_power %}
+                                <option value="{{ power }}">{{ power }}</option>
+                                {% endfor %}
+                            </select>
+                        </div> <br>
+
+                        <!-- Seats -->
+                        <div class="form-group mb-4">
+                            <label for="seats" class="form-label">Seats</label>
+                            <select class="form-control border-primary" name="seats" id="seats">
+                                <option value="" disabled selected>Select number of seats</option>
+                                {% for seat in seats %}
+                                <option value="{{ seat }}">{{ seat }}</option>
+                                {% endfor %}
+                            </select>
+                        </div> <br>
+
+                        <!-- Submit Button -->
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-success btn-lg ">Predict</button>
+                        </div> <br>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Live Updates -->
+    <script>
+        function updateYearValue(value) {
+            document.getElementById('year_value').innerText = `Year: ${value}`;
+        }
+
+        function updateKmValue(value) {
+            document.getElementById('km_value').innerText = `KM: ${value}`;
+        }
+
+        function updateMileageValue(value) {
+            document.getElementById('mileage_value').innerText = `Mileage: ${value}`;
+        }
+    </script>
+</body>
+{% endblock body %}
