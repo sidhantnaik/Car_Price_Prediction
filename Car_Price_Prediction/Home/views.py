@@ -6,88 +6,36 @@ from django.contrib import messages
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import logout,authenticate,login
-
-
-
+from Home.helper import GETDATA
 
 def index(request):
+    flag = 1
+    context = {}
 
-        from django.shortcuts import render
-        import pandas as pd
-        import numpy as np
-        from sklearn.ensemble import RandomForestRegressor
-        from sklearn.model_selection import train_test_split
-        import os
-        from django.conf import settings
+    data_getter = GETDATA()  
+    context = data_getter.get_cars_data()
+    if flag == 2:
+        flag = 2
+          
+    else:
+        if request.method=="POST":
+            car_brand = request.POST.get('car_brand')
+            year = request.POST.get('year')
+            km = request.POST.get('km')
+            fuel_type = request.POST.get('fuel_type')
+            seller_type = request.POST.get('seller_type')
+            transmission = request.POST.get('transmission')
+            owner = request.POST.get('owner')
+            mileage = request.POST.get('mileage')
+            engine = request.POST.get('engine')
+            max_pow = request.POST.get('max_pow')
+            seats = request.POST.get('seats')
+            
+            context = data_getter.get_prediction()  
+            
+            # car_brand,year,km,fuel_type,seller_type,transmission,owner,mileage,engine,max_pow,seats
 
-        # Load and preprocess the data
-
-        # file_path = os.path.join(settings.BASE_DIR, "Car_Price_Prediction", "Data", "Cardetails.csv")
-        cars_data = pd.read_csv(r"D:\myProject\ML Project\Car_Price_Prediction\Data\Cardetails.csv")
-        cars_data.drop(columns=["torque"], inplace=True)
-        cars_data.dropna(inplace=True)
-        cars_data.drop_duplicates(inplace=True)
-
-       
-
-        def get_first_string(firt_string):
-            firt_string=firt_string.split(' ')[0]
-            return firt_string.strip(' ')
-
-        def get_first_value(value):
-            value=value.split(' ')[0]
-            value=value.strip()
-            if value=='':
-                value=0
-            return float(value)
-
-        cars_data['name']=cars_data['name'].apply(get_first_string)
-        cars_data['mileage']=cars_data['mileage'].apply(get_first_value)
-        cars_data['max_power']=cars_data['max_power'].apply(get_first_value)
-        cars_data['engine']=cars_data['engine'].apply(get_first_value)
-
-
-        # Extract unique values for dropdowns
-        car_brands = cars_data['name'].unique()
-        fuel_types = cars_data['fuel'].unique()
-        transmissions = cars_data['transmission'].unique() 
-        owners = cars_data['owner'].unique()
-        engines = cars_data['engine'].unique()
-        seller_type=cars_data['seller_type'].unique()
-        max_power=cars_data['max_power'].unique()
-        seats=cars_data['seats'].unique()
-        
-
-
-        arr=np.arange(1,32)
-
-        cars_data['name'].replace(cars_data['name'].unique(),arr,inplace=True)
-        cars_data['transmission'].replace(['Manual', 'Automatic'],[1,2],inplace=True)
-        cars_data['seller_type'].replace(['Individual', 'Dealer', 'Trustmark Dealer'],[1,2,3],inplace=True)
-        cars_data['fuel'].replace(['Diesel', 'Petrol', 'LPG', 'CNG'],[1,2,3,4],inplace=True)
-        cars_data['owner'].replace(cars_data['owner'].unique(),[1,2,3,4,5],inplace=True)
-
-
-
-        input_data = cars_data.drop(columns=['selling_price'])
-        output_data = cars_data['selling_price']
-        x_train, x_test, y_train, y_test = train_test_split(input_data, output_data, test_size=0.2, random_state=2)
-
-        model = RandomForestRegressor()
-        model.fit(x_train, y_train)
-
-        # Pass the dropdown data to the template
-        context = {
-            'car_brands': car_brands,
-            'fuel_types': fuel_types,
-            'transmissions': transmissions,
-            'owners': owners,
-            'engines': engines,
-            'seller_type':seller_type,
-            'max_power':max_power,
-            'seats':seats,
-            }
-        return render(request, 'index.html', context)
+    return render(request, 'index.html', context)
 
 
 # def index(request):
@@ -143,3 +91,8 @@ def contact(request):
 def logout(request):
     logout()
     return render(request,'index.html')
+
+
+
+# contact = Contact(car_brand=car_brand, year=year, km=km, fuel_type=fuel_type, seller_type=seller_type,transmission=transmission,owner=owner,mileage=mileage,engine=engine,max_pow=max_pow,seats=seats)
+#             contact.save()
