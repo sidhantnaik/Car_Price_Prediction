@@ -20,10 +20,10 @@
                         <!-- Car Brands Dropdown -->
                         <div class="form-group mb-4">
                             <label for="car_brand" class="form-label">Car Brand</label>
-                            <select class="form-control border-primary" name="car_brand" id="car_brand">
+                            <select name="car_brand">
                                 <option value="" disabled selected>Select brand name</option>
-                                {% for brand in car_brands %}
-                                <option value="{{ brand }}">{{ brand }}</option>
+                                {% for key, value in car_brands.items %}
+                                <option value="{{ key }}">{{ value }}</option>
                                 {% endfor %}
                             </select>
                         </div> <br>
@@ -47,8 +47,8 @@
                             <label for="fuel_type" class="form-label">Fuel Type</label>
                             <select class="form-control border-primary" name="fuel_type" id="fuel_type">
                                 <option value="" disabled selected>Select fuel type</option>
-                                {% for fuel in fuel_types %}
-                                <option value="{{ fuel }}">{{ fuel }}</option>
+                                {% for key, value in fuel_types.items %}
+                                <option value="{{ key }}">{{ value }}</option>
                                 {% endfor %}
                             </select>
                         </div> <br>
@@ -58,9 +58,9 @@
                             <label for="seller_type" class="form-label">Seller Type</label>
                             <select class="form-control border-primary" name="seller_type" id="seller_type">
                                 <option value="" disabled selected>Select seller type</option>
-                                {% for seller in seller_type %}
-                                <option value="{{ seller }}">{{ seller }}</option>
-                                {% endfor %}
+                                {% for key, value in seller_types.items %}
+                                  <option value="{{ key }}">{{ value }}</option>
+                                 {% endfor %}
                             </select>
                         </div> <br>
 
@@ -69,8 +69,8 @@
                             <label for="transmission" class="form-label">Transmission</label>
                             <select class="form-control border-primary" name="transmission" id="transmission">
                                 <option value="" disabled selected>Select transmission type</option>
-                                {% for transmission in transmissions %}
-                                <option value="{{ transmission }}">{{ transmission }}</option>
+                                {% for index, trans in transmissions.items %}
+                                 <option value="{{ index }}">{{ trans }}</option>
                                 {% endfor %}
                             </select>
                         </div> <br>
@@ -80,8 +80,8 @@
                             <label for="owner" class="form-label">Owner</label>
                             <select class="form-control border-primary" name="owner" id="owner">
                                 <option value="" disabled selected>Select owner type</option>
-                                {% for owner in owners %}
-                                <option value="{{ owner }}">{{ owner }}</option>
+                                {% for index, own in owners.items %}
+                                 <option value="{{ index }}">{{ own }}</option>
                                 {% endfor %}
                             </select>
                         </div> <br>
@@ -98,8 +98,8 @@
                             <label for="engine" class="form-label">Engine</label>
                             <select class="form-control border-primary" name="engine" id="engine">
                                 <option value="" disabled selected>Select engine type</option>
-                                {% for engine in engines %}
-                                <option value="{{ engine }}">{{ engine }}</option>
+                                {% for key, value in engines.items %}
+                                <option value="{{ key }}">{{ value }}</option>
                                 {% endfor %}
                             </select>
                         </div> <br>
@@ -109,8 +109,8 @@
                             <label for="max_pow" class="form-label">Max Power</label>
                             <select class="form-control border-primary" name="max_pow" id="max_pow">
                                 <option value="" disabled selected>Select max power</option>
-                                {% for power in max_power %}
-                                <option value="{{ power }}">{{ power }}</option>
+                                {% for key, value in max_power.items %}
+                                <option value="{{ key }}">{{ value }}</option>
                                 {% endfor %}
                             </select>
                         </div> <br>
@@ -120,8 +120,8 @@
                             <label for="seats" class="form-label">Seats</label>
                             <select class="form-control border-primary" name="seats" id="seats">
                                 <option value="" disabled selected>Select number of seats</option>
-                                {% for seat in seats %}
-                                <option value="{{ seat }}">{{ seat }}</option>
+                                {% for key, value in seats.items %}
+                                <option value="{{ key }}">{{ value }}</option>
                                 {% endfor %}
                             </select>
                         </div> <br>
@@ -132,9 +132,9 @@
                         </div> <br>
                     </form>
 
-                    <div class="form-group text-center">
-                        <h3>{{prediction}}</h3>
-                    </div> <br>
+                    {% if prediction %}
+                      <h2>{{ prediction }}</h2>
+                    {% endif %}
                 </div>
 
             </div>

@@ -9,33 +9,29 @@ from django.contrib.auth import logout,authenticate,login
 from Home.helper import GETDATA
 
 def index(request):
-    flag = 1
-    context = {}
-
-    data_getter = GETDATA()  
+    data_getter = GETDATA()
     context = data_getter.get_cars_data()
-    if flag == 2:
-        flag = 2
-          
-    else:
-        if request.method=="POST":
-            car_brand = request.POST.get('car_brand')
-            year = request.POST.get('year')
-            km = request.POST.get('km')
-            fuel_type = request.POST.get('fuel_type')
-            seller_type = request.POST.get('seller_type')
-            transmission = request.POST.get('transmission')
-            owner = request.POST.get('owner')
-            mileage = request.POST.get('mileage')
-            engine = request.POST.get('engine')
-            max_pow = request.POST.get('max_pow')
-            seats = request.POST.get('seats')
-            
-            context = data_getter.get_prediction()  
-            
-            # car_brand,year,km,fuel_type,seller_type,transmission,owner,mileage,engine,max_pow,seats
+
+    if request.method == "POST":
+        input_data = {
+            'name': request.POST.get('car_brand'),  
+            'year': int(request.POST.get('year')),
+            'km': float(request.POST.get('km')),
+            'fuel': request.POST.get('fuel_type'),  
+            'seller_type': request.POST.get('seller_type'),  
+            'transmission': request.POST.get('transmission'),  
+            'owner': request.POST.get('owner'),  
+            'mileage': float(request.POST.get('mileage')),
+            'engine': float(request.POST.get('engine')),
+            'max_power': float(request.POST.get('max_pow')),
+            'seats': int(request.POST.get('seats')),
+        }
+
+        context = data_getter.get_prediction(input_data)
+
 
     return render(request, 'index.html', context)
+
 
 
 # def index(request):
@@ -92,7 +88,3 @@ def logout(request):
     logout()
     return render(request,'index.html')
 
-
-
-# contact = Contact(car_brand=car_brand, year=year, km=km, fuel_type=fuel_type, seller_type=seller_type,transmission=transmission,owner=owner,mileage=mileage,engine=engine,max_pow=max_pow,seats=seats)
-#             contact.save()
