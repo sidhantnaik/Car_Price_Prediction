@@ -22,6 +22,6 @@ admin.site.site_title="Admin Portal"
 admin.site.index_title="Welcome to Car Price Prediction Admin"
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', include('Admin.urls')),
     path('',include('Home.urls'))
 ]

@@ -5,12 +5,14 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 from django.contrib import messages
 
-
+import os
+from django.conf import settings
 
 class GETDATA:
 
     def __init__(self):
-        self.cars_data = pd.read_csv(r"D:\myProject\ML Project\Car_Price_Prediction\Data\Cardetails.csv")
+        data_path = os.path.join(settings.BASE_DIR, 'Data', 'Cardetails.csv')
+        self.cars_data = pd.read_csv(data_path)
         self.cars_data.drop(columns=["torque"], inplace=True)
         self.cars_data.dropna(inplace=True)
         self.cars_data.drop_duplicates(inplace=True)

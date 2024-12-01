@@ -4,6 +4,7 @@
 <head>
     <title>{% block title %} {% endblock title %}</title>
     <link rel="stylesheet" href="\static\bootstrap-5.3.3-dist\bootstrap-5.3.3-dist\css\bootstrap.min.css">
+    <script src="\static\bootstrap-5.3.3-dist\bootstrap-5.3.3-dist\jquery\dist\jquery.min.js"></script>
 </head>
 
 <body>
@@ -36,17 +37,29 @@
         </div>
     </nav>
 
-    {% if messages %}
-         {% for message in messages %}
-            <div class="alert alert-{{message.tags}} alert-dismissible fade show"  role="alert">
-               <div></div>
-                {{message}}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true"></span>
-                </button>
+   <!-- Result Modal -->
+<div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="card shadow-lg">
+            <div class="card-header bg-info text-white text-center">
+                <h5 class="modal-title">Prediction Result</h5>
             </div>
-        {% endfor %}
-    {% endif %}
+            <div class="card-body text-center">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true"></span>
+                            </button>
+                        </div>                                                                                                                                                                                                                                                              
+                    {% endfor %}
+                {% endif %}
+                <h4 id="predictionResult">Predicted Price: {{Prediction}}</h4>
+            </div>
+        </div>
+    </div>
+</div>
 
     <!-- Page Content -->
     {% block body %}

@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render,HttpResponse
 from datetime import datetime
 from Home.models import Contact
@@ -27,8 +28,8 @@ def index(request):
             'seats': int(request.POST.get('seats')),
         }
 
-        context = data_getter.get_prediction(input_data)
-
+        prediction = data_getter.get_prediction(input_data)
+        return JsonResponse(prediction)
 
     return render(request, 'index.html', context)
 
