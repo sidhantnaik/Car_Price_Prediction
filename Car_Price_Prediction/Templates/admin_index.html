@@ -1,0 +1,9 @@
+
+
+{% extends 'admin_base.html' %}
+
+{% block content %}
+<h1>Admin Dashboard</h1>
+<a href="{% url 'see_cars_data' %}">See Cars Data</a>
+<a href="{% url 'add_new_car_data' %}">Add New Car Data</a>
+{% endblock %}

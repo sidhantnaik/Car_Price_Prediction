@@ -1,0 +1,14 @@
+{% extends 'admin_base.html' %}
+
+{% block content %}
+<h1>Add New Car Data</h1>
+{% if message %}
+<div class="alert alert-success">{{ message }}</div>
+{% endif %}
+<form method="post">
+    {% csrf_token %}
+    <!-- Add input fields for car data -->
+    <button type="submit" class="btn btn-primary">Save</button>
+
+</form>
+{% endblock %}

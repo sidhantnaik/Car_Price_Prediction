@@ -1,10 +1,13 @@
-from django.contrib import admin
 from django.urls import path
-from Admin import views
+from . import views
+
+
+
+app_name = 'custom_admin'
 
 
 urlpatterns = [
-        path("", admin.site.urls, name='adminHome' ),
-        path("showdata",views.showData,name='showCarsData'),
-        path("addCar",views.addCar,name='addNewCar'),
+    path('', views.admin_index, name='admin_index'),
+    path('see_cars_data/', views.see_cars_data, name='see_cars_data'),
+    path('add_new_car_data/', views.add_new_car_data, name='add_new_car_data'),
 ]
