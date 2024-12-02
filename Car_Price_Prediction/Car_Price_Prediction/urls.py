@@ -23,6 +23,6 @@ admin.site.index_title="Welcome to Car Price Prediction Admin"
 
 urlpatterns = [
     path('', include('Home.urls')),
+    path('custom_admin/', include(('Admin.urls', 'Admin'), namespace='custom_admin')),
     path('admin/', admin.site.urls),
-    path('custom-admin/', include('Admin.urls', namespace='custom_admin')),
 ]
