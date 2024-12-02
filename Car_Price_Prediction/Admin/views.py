@@ -11,7 +11,6 @@ def see_cars_data(request):
 
 def add_new_car_data(request):
     if request.method == 'POST':
-        # Process the form data and update the CSV file
         data_getter = GETDATA()
         data_getter.add_new_car(request.POST)
         return render(request, 'add_new_car_data.html', {'message': 'Car data added successfully!'})
