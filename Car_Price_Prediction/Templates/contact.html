@@ -3,58 +3,40 @@
 {% block title %}Contact{% endblock title %}
 
 {% block body %}
-<style>
-    form {
+<body>
+    
 
-        background-color: rgba(248, 242, 242, 0.945);
-        border: 2px solid #000000;
-        border-radius: 15px;
-        box-shadow: 9px 9px 40px rgb(160, 160, 160);
-        padding: 4rem;
-    }
-
-    body {
-        background-color: rgb(79, 74, 74);
-    }
-</style>
-
-<body class=" justify-content-center align-items-center">
-
-    <form method="post" action="/contact" class="col-10 col-md-8 col-lg-8" style="text-align:center; margin: 0 auto;">
-
-        {% csrf_token %}
-        <div class="container fluid">
-            <div class="login-form container-fluid">
-                <h2 class="text-center ">Contact Feedback</h2><br>
-
-                <div class="form-group mb-3 ">
-                    <input type="text" name="name" class="form-control" placeholder="Enter your name" required>
+<div class="container ">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <form method="post" action="/contact" class="p-4 border rounded shadow bg-light" style="background: linear-gradient(135deg, #e0e1e2, #f1f3f7, #e0e1e2);
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);border: white;">
+                {% csrf_token %}
+                <h2 class="text-center mb-4">Contact Feedback</h2>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Your Name</label>
+                    <input type="text" name="name" id="name" class="form-control" placeholder="Enter your name" required>
                 </div>
-                <br>
-                <div class="form-group mb-3">
-                    <input type="email" name="email" class="form-control" placeholder="Enter your e-mail" required>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Your Email</label>
+                    <input type="email" name="email" id="email" class="form-control" placeholder="Enter your email" required>
                 </div>
-                <br>
-                <div class="form-group mb-3">
-                    <input type="text" maxlength="11" name="phone" class="form-control"
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Your Phone</label>
+                    <input type="text" name="phone" id="phone" maxlength="11" class="form-control"
                         placeholder="Enter your phone number" required>
                 </div>
-                <br>
-                <div class="form-group mb-3">
-                    <textarea name="desc" class="form-control" placeholder="Write your Feedback . . ." rows="5"
+                <div class="mb-3">
+                    <label for="desc" class="form-label">Your Feedback</label>
+                    <textarea name="desc" id="desc" class="form-control" placeholder="Write your feedback..." rows="4"
                         required></textarea>
                 </div>
-                <br>
-                <div>
-                    <button id="btnlogin" type="submit" class="btn btn-primary m-2">
-                        Submit
-                    </button>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary w-100">Submit</button>
                 </div>
-                <br>
-            </div>
+            </form>
         </div>
-
-    </form>
+    </div>
+</div>
 </body>
-
-    {% endblock body %}
+{% endblock body %}

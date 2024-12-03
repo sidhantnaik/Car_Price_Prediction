@@ -1,83 +1,81 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %} {% endblock title %}</title>
-    <link rel="stylesheet" href="\static\bootstrap-5.3.3-dist\bootstrap-5.3.3-dist\css\bootstrap.min.css">
-    <script src="\static\bootstrap-5.3.3-dist\bootstrap-5.3.3-dist\jquery\dist\jquery.min.js"></script>
+    <link rel="stylesheet" href="/static/bootstrap-5.3.3-dist/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+    <script src="/static/bootstrap-5.3.3-dist/bootstrap-5.3.3-dist/jquery/dist/jquery.min.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 50px;
+            color: #f8f9fa !important;
+        }
+
+        .footer {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .footer a {
+            color: #b2dfed;
+            text-decoration: none;
+            font-size: medium;
+        }
+
+        .footer a:hover {
+            color: #ffff;
+            text-decoration: underline;
+            font-size:large;
+        }
+    </style>
 </head>
 
-<body>
-
-    <!-- Top Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
-        <div class="container-fluid">
-            <a class="navbar-brand px-4" href="/custom_admin/admin_index/">Car Price Prediction</a>
-
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav py-2">
-                    <li class="nav-item px-4">
-                        <a class="nav-link active" aria-current="page" href="/">Home</a>
-                    </li>
-                    <li class="nav-item px-4">
-                        <a class="nav-link" href="/about">About</a>
-                    </li>
-                    <li class="nav-item px-4">
-                        <a class="nav-link" href="/contact">Contact</a>
-                    </li>
-                </ul>
-            </div>
-
-            
-
+    <!-- Navbar -->
+    <nav class="navbar footer navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Car Price Prediction</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-   <!-- Result Modal -->
-<div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-        <div class="card shadow-lg">
-            <div class="card-header bg-info text-white text-center">
-                <h5 class="modal-title">Prediction Result</h5>
-            </div>
-            <div class="card-body text-center">
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="alert alert-{{ message.tags }} alert-dismissible show" role="alert">
-                            {{ message }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true"></span>
-                            </button>
-                        </div>                                                                                                                                                                                                                                                              
-                    {% endfor %}
-                {% endif %}
-                <h4 id="predictionResult">Predicted Price: {{Prediction}}</h4>
-            </div>
+    <!-- Main Content -->
+    <main class="container my-5">
+        {% block body %}
+        {% endblock body %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer py-4 ">
+        <div class="container text-center">
+            <p>© 2024 Car Price Prediction | Developed by Sidhant Naik</p>
+            <a href="/terms">Terms of Service</a> | <a href="/privacy">Privacy Policy</a>
         </div>
-    </div>
-</div>
+    </footer>
 
-    <!-- Page Content -->
-    {% block body %}
+    <script src="/static/bootstrap-5.3.3-dist/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
 
-    {% endblock body %}
-
-    <!-- Bottom Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mt-5" style="margin-top:4rem">
-        <div class="container-fluid justify-content text-white">
-            <p><br>© Car Price Prediction<br>
-                Devloped by,<br>
-                Sidhant Naik<br><br></p>
-
-            <img src="\static\myimg.png" alt="Owner" style="width: 10%; border-radius: 50%;">
-        </div>
-    </nav>
-
-    <script src="\static\bootstrap-5.3.3-dist\bootstrap-5.3.3-dist\js\bootstrap.bundle.min.js"></script>
-</body>
 
 </html>

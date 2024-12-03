@@ -42,15 +42,15 @@ def index(request):
 #     return render(request,"index.html")
 
 def login(request):
-    if request.method=="POST":
-        name = request.POST.get('name')
-        passw = request.POST.get('passw')
+    # if request.method=="POST":
+    #     name = request.POST.get('name')
+    #     passw = request.POST.get('passw')
 
-        user=authenticate(username=name,password=passw)
-        if user is not None:
-            return redirect("/login")
-        else:
+    #     user=authenticate(username=name,password=passw)
+    #     if user is not None:
             return render(request,"login.html")
+        # else:
+        #     return redirect("/login")
 
 
 def signin(request):
