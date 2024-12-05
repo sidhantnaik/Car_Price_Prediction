@@ -1,39 +1,40 @@
 {% extends 'admin_base.html' %}
-
 {% block content %}
-<h1>See Cars Data</h1>
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Year</th>
-            <th>KM Driven</th>
-            <th>Fuel Type</th>
-            <th>Seller Type</th>
-            <th>Transmission</th>
-            <th>Owner</th>
-            <th>Mileage</th>
-            <th>Engine</th>
-            <th>Max Power</th>
-            <th>Seats</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for car in cars_data %}
-        <tr>
-            <td>{{ car.name }}</td>
-            <td>{{ car.year }}</td>
-            <td>{{ car.km_driven }}</td>
-            <td>{{ car.fuel }}</td>
-            <td>{{ car.seller_type }}</td>
-            <td>{{ car.transmission }}</td>
-            <td>{{ car.owner }}</td>
-            <td>{{ car.mileage }}</td>
-            <td>{{ car.engine }}</td>
-            <td>{{ car.max_power }}</td>
-            <td>{{ car.seats }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="container mt-4">
+    <h1 class="mb-4 text-center">See Cars Data</h1>
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Car ID</th>
+                <th>Car Brand</th>
+                <th>Fuel Type</th>
+                <th>Transmission</th>
+                <th>Owner</th>
+                <th>Seller Type</th>
+                <th>Engine</th>
+                <th>Max Power</th>
+                <th>Seats</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for car in car_data %}
+            <tr>
+                <td>{{ car.car_id }}</td>
+                <td>{{ car.brand }}</td>
+                <td>{{ car.fuel_type }}</td>
+                <td>{{ car.transmission }}</td>
+                <td>{{ car.owner }}</td>
+                <td>{{ car.seller_type }}</td>
+                <td>{{ car.engine }}</td>
+                <td>{{ car.max_power }}</td>
+                <td>{{ car.seats }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="9" class="text-center">No data available</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

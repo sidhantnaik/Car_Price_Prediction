@@ -3,12 +3,16 @@ from django.shortcuts import render,HttpResponse,redirect
 from datetime import datetime
 from Home.models import Contact
 from Home.models import Signin
-from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import logout,authenticate,login
+from django.contrib import messages
 from Home.helper import GETDATA
 
+
 def index(request):
+    # if request.user.is_anonymous:
+    #     return redirect("/login")
+    
     data_getter = GETDATA()
     context = data_getter.get_cars_data()
 
@@ -33,25 +37,21 @@ def index(request):
     return render(request, 'index.html', context)
 
 
+def loginUser(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
 
-# def index(request):
-#     if request.user.is_anonymous:
-#         return redirect("/login")
-    
-    
-#     return render(request,"index.html")
+        user = authenticate(username=username, password=password)
 
-def login(request):
-    # if request.method=="POST":
-    #     name = request.POST.get('name')
-    #     passw = request.POST.get('passw')
+        if user is not None:
+            login(request, user)
+            return redirect("/index")
+        else:
+            messages.error(request, "Invalid username or password.")
+            return render(request, "login.html")
 
-    #     user=authenticate(username=name,password=passw)
-    #     if user is not None:
-            return render(request,"login.html")
-        # else:
-        #     return redirect("/login")
-
+    return render(request, "login.html")
 
 def signin(request):
     if request.method == "POST":
@@ -71,6 +71,7 @@ def signin(request):
     return render(request, "signin.html")
 
 def about(request):
+    messages.success(request,"ohh yeah !")
     return render(request,"about.html")
 
 def contact(request):
@@ -78,13 +79,13 @@ def contact(request):
         name = request.POST.get('name')
         email = request.POST.get('email')
         phone = request.POST.get('phone')
-        passw = request.POST.get('passw')
-        contact = Contact(name=name, email=email, phone=phone, passw=passw, date=datetime.today())
+        desc = request.POST.get('desc')
+        contact = Contact(name=name, email=email, phone=phone, desc=desc, date=datetime.today())
         contact.save()
         messages.success(request,"your data is submitted succefully.")
     return render(request, "contact.html")
 
-def logout(request):
-    logout()
-    return render(request,'index.html')
+def logoutUser(request):
+    logout(request)
+    return redirect('/login')
 

@@ -40,7 +40,7 @@
     <!-- Navbar -->
     <nav class="navbar footer navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="/">Car Price Prediction</a>
+            <a class="navbar-brand" href="/custom_admin/admin_index/">Car Price Prediction</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -58,8 +58,22 @@
                     </li>
                 </ul>
             </div>
+            <a href="/logout" style="color: rgb(83, 187, 248);text-decoration: underline;margin-left: 2%;font-size: larger;margin-right: -3%;">logout</a>
         </div>
     </nav>
+
+
+    {% if message %}
+        {% for message in messages %}
+            <div class="alert alert-{{message.tags}} alert-dismissiible fade show my-0" role="alert">
+                {{message}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
 
     <!-- Main Content -->
     <main class="container my-5">
