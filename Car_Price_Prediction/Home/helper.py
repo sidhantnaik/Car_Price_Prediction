@@ -51,7 +51,6 @@ class GETDATA:
 
         return context
 
-
     def get_prediction(self, input_data):
         
         cars_data = self.cars_data.copy()

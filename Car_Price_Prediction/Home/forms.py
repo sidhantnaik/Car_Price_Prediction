@@ -30,17 +30,17 @@ class SignupForm(UserCreationForm):
     )
 
     email = forms.EmailField(
-        widget=forms.PasswordInput(
+        widget=forms.EmailInput(
             attrs={"placeholder": "Email", "class": "w-full px-3 p-4 rounded-xl"}
         )
     )
 
-    phone = forms.IntegerField(
-        max_value=12,
-        widget=forms.PasswordInput(
-            attrs={"placeholder": "Mobile", "class": "w-full px-3 p-4 rounded-xl"}
-        )
-    )
+    # phone = forms.IntegerField(
+    #     max_value=12,
+    #     widget=forms.PasswordInput(
+    #         attrs={"placeholder": "Mobile", "class": "w-full px-3 p-4 rounded-xl"}
+    #     )
+    # )
 
     password1 = forms.CharField(
         widget=forms.PasswordInput(

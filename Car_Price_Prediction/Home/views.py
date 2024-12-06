@@ -1,18 +1,16 @@
 from django.http import JsonResponse
 from django.shortcuts import render,HttpResponse,redirect
 from datetime import datetime
-from Home.models import Contact
-from Home.models import Signin
+from Home.models import Contact,Signin
 from django.contrib.auth.models import User
 from django.contrib.auth import logout,authenticate,login
 from django.contrib import messages
 from Home.helper import GETDATA
 
+from .forms import SignupForm
+
 
 def index(request):
-    # if request.user.is_anonymous:
-    #     return redirect("/login")
-    
     data_getter = GETDATA()
     context = data_getter.get_cars_data()
 
@@ -37,38 +35,38 @@ def index(request):
     return render(request, 'index.html', context)
 
 
-def loginUser(request):
-    if request.method == "POST":
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+# def loginUser(request):
+#     if request.method == "POST":
+#         username = request.POST.get('username')
+#         password = request.POST.get('password')
 
-        user = authenticate(username=username, password=password)
+#         user = authenticate(username=username, password=password)
 
-        if user is not None:
-            login(request, user)
-            return redirect("/index")
-        else:
-            messages.error(request, "Invalid username or password.")
-            return render(request, "login.html")
+#         if user is not None:
+#             login(request, user)
+#             return redirect("/index")
+#         else:
+#             messages.error(request, "Invalid username or password.")
+#             return render(request, "login.html")
 
-    return render(request, "login.html")
+#     return render(request, "login.html")
 
-def signin(request):
-    if request.method == "POST":
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        phone = request.POST.get('phone')
-        passw = request.POST.get('passw')
-        confpass=request.POST.get('confpass')
+# def signup(request):
+#     if request.method == "POST":
+#         name = request.POST.get('name')
+#         email = request.POST.get('email')
+#         phone = request.POST.get('phone')
+#         passw = request.POST.get('passw')
+#         confpass=request.POST.get('confpass')
         
-        if confpass==passw:
-            signin = Signin(name=name, email=email, phone=phone,passw=passw)
-            signin.save()
-            messages.success(request,"Sign in succefully.")
-        else:
-            messages.warning(request,"unable to Sign in. ")
+#         if confpass==passw:
+#             signin = Signin(name=name, email=email, phone=phone,passw=passw)
+#             signin.save()
+#             messages.success(request,"Sign in succefully.")
+#         else:
+#             messages.warning(request,"unable to Sign in. ")
 
-    return render(request, "signin.html")
+#     return render(request, "signup.html")
 
 def about(request):
     messages.success(request,"ohh yeah !")
@@ -89,3 +87,20 @@ def logoutUser(request):
     logout(request)
     return redirect('/login')
 
+
+def signup(request):
+    if request.method=='POST':
+        form=SignupForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect('/login/')
+        
+    else:
+        form=SignupForm()
+
+    return render(request,'signup.html',
+                  {
+                      'form':form
+                  }) 
