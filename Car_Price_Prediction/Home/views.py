@@ -1,13 +1,13 @@
 from django.http import JsonResponse
 from django.shortcuts import render,HttpResponse,redirect
 from datetime import datetime
-from Home.models import Contact,Signin
+from Home.models import Contact,UserData
 from django.contrib.auth.models import User
 from django.contrib.auth import logout,authenticate,login
 from django.contrib import messages
 from Home.helper import GETDATA
+from django.contrib.auth.hashers import make_password,check_password
 
-from .forms import SignupForm
 
 
 def index(request):
@@ -17,16 +17,16 @@ def index(request):
     if request.method == "POST":
         input_data = {
             'name': request.POST.get('car_brand'),  
-            'year': int(request.POST.get('year')),
-            'km': float(request.POST.get('km')),
+            'year': request.POST.get('year'),
+            'km': request.POST.get('km'),
             'fuel': request.POST.get('fuel_type'),  
             'seller_type': request.POST.get('seller_type'),  
             'transmission': request.POST.get('transmission'),  
             'owner': request.POST.get('owner'),  
-            'mileage': float(request.POST.get('mileage')),
-            'engine': float(request.POST.get('engine')),
-            'max_power': float(request.POST.get('max_pow')),
-            'seats': int(request.POST.get('seats')),
+            'mileage': request.POST.get('mileage'),
+            'engine': request.POST.get('engine'),
+            'max_power': request.POST.get('max_pow'),
+            'seats': request.POST.get('seats'),
         }
 
         prediction = data_getter.get_prediction(input_data)
@@ -34,39 +34,6 @@ def index(request):
 
     return render(request, 'index.html', context)
 
-
-# def loginUser(request):
-#     if request.method == "POST":
-#         username = request.POST.get('username')
-#         password = request.POST.get('password')
-
-#         user = authenticate(username=username, password=password)
-
-#         if user is not None:
-#             login(request, user)
-#             return redirect("/index")
-#         else:
-#             messages.error(request, "Invalid username or password.")
-#             return render(request, "login.html")
-
-#     return render(request, "login.html")
-
-# def signup(request):
-#     if request.method == "POST":
-#         name = request.POST.get('name')
-#         email = request.POST.get('email')
-#         phone = request.POST.get('phone')
-#         passw = request.POST.get('passw')
-#         confpass=request.POST.get('confpass')
-        
-#         if confpass==passw:
-#             signin = Signin(name=name, email=email, phone=phone,passw=passw)
-#             signin.save()
-#             messages.success(request,"Sign in succefully.")
-#         else:
-#             messages.warning(request,"unable to Sign in. ")
-
-#     return render(request, "signup.html")
 
 def about(request):
     messages.success(request,"ohh yeah !")
@@ -88,19 +55,37 @@ def logoutUser(request):
     return redirect('/login')
 
 
-def signup(request):
+def signupUser(request):
     if request.method=='POST':
-        form=SignupForm(request.POST)
+        name = request.POST['name']
+        email = request.POST['email']
+        phone=request.POST['phone']
+        password = request.POST['passw']
+        confirm_password = request.POST['confpass']
 
-        if form.is_valid():
-            form.save()
+        if password==confirm_password:
+            user = UserData(name=name, email=email, phone=phone, password=make_password(password))  
+            user.save()
+            # messages.success(request,"your data is submitted succefully.")
+        return redirect('/login')
+    
+    return render(request, 'signup.html')
 
-            return redirect('/login/')
+
+def loginUser(request):
+    if request.method == 'POST':
+        name = request.POST['name']
+        password = request.POST['password']
         
-    else:
-        form=SignupForm()
+        try:
+            user = UserData.objects.get(name=name)
+        except UserData.DoesNotExist:
+            return render(request, 'login.html', {'error': 'Invalid email or password'})
 
-    return render(request,'signup.html',
-                  {
-                      'form':form
-                  }) 
+        if check_password(password, user.password):
+            # Perform login (set session, etc.)
+            return redirect('/index')  
+        else:
+            return render(request, 'login.html', {'error': 'Invalid user or password'})
+
+    return render(request,"login.html")

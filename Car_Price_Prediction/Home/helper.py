@@ -72,6 +72,7 @@ class GETDATA:
         model = RandomForestRegressor()
         model.fit(X_train, y_train)
 
+        
         input_row = pd.DataFrame([{
             'name': int(input_data['name']),
             'year': int(input_data['year']),
