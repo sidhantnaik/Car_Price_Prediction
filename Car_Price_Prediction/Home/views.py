@@ -1,15 +1,12 @@
 from django.http import JsonResponse
-from django.shortcuts import render,HttpResponse,redirect
+from django.shortcuts import render,redirect
 from datetime import datetime
-from Home.models import Contact,UserData
-from django.contrib.auth.models import User
+from Home.models import Contact
 from django.contrib.auth import logout,authenticate,login
 from django.contrib import messages
 from Home.helper import GETDATA
-from django.contrib.auth.hashers import make_password,check_password
-
-from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
+from Admin.forms import RegisterForm
 
 @login_required
 def index(request):
@@ -60,34 +57,34 @@ def contact(request):
     return render(request, "contact.html")
 
 def logoutUser(request):
-    logout(request)
-    return redirect('/login')
+    if request.user.is_authenticated:
+        logout(request)
+    return redirect("/login")
 
 
 def signupUser(request):
-    if request.method=='POST':
-        name = request.POST['name']
-        email = request.POST['email']
-        phone=request.POST['phone']
-        password = request.POST['passw']
-        confirm_password = request.POST['confpass']
+    if request.method == "POST":
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            try:
+                user = form.save()
+                login(request, user)  # Automatically log in the user after signup
+                messages.success(request, "Account created successfully.")
+                return redirect("home:login")  # Redirect to login page
+            except Exception as e:
+                messages.error(request, f"An error occurred: {str(e)}")
+                form = RegisterForm(request.POST)  # Repopulate form with submitted data
+    else:
+        form = RegisterForm()
 
-        if password==confirm_password:
-            user = UserData(name=name, email=email, phone=phone, password=make_password(password))  
-            user.save()
-            # messages.success(request,"your data is submitted succefully.")
-        return redirect('/login')
-    
-    return render(request, 'signup.html')
+    return render(request, "signup.html", {'form': form})
 
 
 def loginUser(request):
     if request.method == "POST":
         user = authenticate(username = request.POST["username"], password = request.POST["password"])
 
-        if user is None:
-            return render(request, "login.html", { "error": "Something went wrong!" })
-        else:
+        if user is not None:
             return render(request, 'index.html')
     
     if request.method == "GET": 
