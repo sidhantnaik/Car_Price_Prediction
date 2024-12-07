@@ -8,8 +8,10 @@ from django.contrib import messages
 from Home.helper import GETDATA
 from django.contrib.auth.hashers import make_password,check_password
 
+from django.contrib.auth import authenticate
+from django.contrib.auth.decorators import login_required
 
-
+@login_required
 def index(request):
     data_getter = GETDATA()
     context = data_getter.get_cars_data()
@@ -30,7 +32,14 @@ def index(request):
         }
 
         prediction = data_getter.get_prediction(input_data)
+        print("=="*30)
+        print("POST")
+        print("=="*30)
         return JsonResponse(prediction)
+    
+    print("=="*30)
+    print("GET")
+    print("=="*30)
 
     return render(request, 'index.html', context)
 
@@ -73,19 +82,13 @@ def signupUser(request):
 
 
 def loginUser(request):
-    if request.method == 'POST':
-        name = request.POST['name']
-        password = request.POST['password']
-        
-        try:
-            user = UserData.objects.get(name=name)
-        except UserData.DoesNotExist:
-            return render(request, 'login.html', {'error': 'Invalid email or password'})
+    if request.method == "POST":
+        user = authenticate(username = request.POST["username"], password = request.POST["password"])
 
-        if check_password(password, user.password):
-            # Perform login (set session, etc.)
-            return redirect('/index')  
+        if user is None:
+            return render(request, "login.html", { "error": "Something went wrong!" })
         else:
-            return render(request, 'login.html', {'error': 'Invalid user or password'})
-
-    return render(request,"login.html")
+            return render(request, 'index.html')
+    
+    if request.method == "GET": 
+        return render(request, "login.html")

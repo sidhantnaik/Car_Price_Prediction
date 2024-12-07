@@ -47,20 +47,36 @@
         <h2 class="text-center text-primary mb-4">Login</h2>
         <form method="post" action="/login">
             {% csrf_token %}
+
             <div class="mb-3">
-                <label for="txtuser" class="form-label">Username</label>
-                <input type="text" id="txtuser" name="name" class="form-control" placeholder="Enter your name" required>
+                {% comment %} <label for="txtuser" class="form-label">Username</label> {% endcomment %}
+                {% comment %} <input type="text" id="txtuser" name="name" class="form-control" placeholder="Enter username" required> {% endcomment %}
+                {{ form.username }}
             </div>
+
             <div class="mb-3">
-                <label for="txtpass" class="form-label">Password</label>
-                <input type="password" id="txtpass" name="password" class="form-control" placeholder="Enter your password" required>
+                {% comment %} <label for="txtpass" class="form-label">Password</label> {% endcomment %}
+                {% comment %} <input type="password" id="txtpass" name="password" class="form-control" placeholder="Enter your password" required> {% endcomment %}
+                {{ form.password }}
             </div>
+
+            {% if form.errors or form.non_field_errors %} 
+                <div class="rounded-xl p-6 px-4 mb-3 mt-3 text-2xl white-text bg-red-200">
+                {% for field in form %}
+                    {{ field.errors }}:<br>
+                    {{ form.non_field_errors }}
+                {% endfor %}
+                </div>
+            {% endif %}
+
             <div class="d-grid">
                 <button id="btnlogin" type="submit" class="btn btn-primary">Login</button>
             </div>
+
             <div class="text-center mt-3">
                 <a href="/signup" class="text-primary">Create New Account</a>
             </div>
+            
         </form>
     </div>
     <script src="/static/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
