@@ -10,7 +10,7 @@
             </div>
             <br>
             <div class="card-body">
-                <form id="predictionForm">
+                <form id="predictionForm" action="/" method="post">
                     {% csrf_token %}
 
                         <!-- Car Brands Dropdown -->
@@ -173,6 +173,21 @@
     </div>
 </div>>
 
+{% if prediction %}
+<div id="resultModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="card shadow-lg">
+            <div class="card-header bg-info text-white text-center">
+                <h5 class="modal-title">Prediction Result</h5>
+            </div>
+            <div class="card-body text-center">
+                <p>Predicted Price: ₹{{ prediction }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
     <!-- JavaScript for Live Updates -->
     <script>
         function updateYearValue(value) {
@@ -187,38 +202,20 @@
             document.getElementById('mileage_value').innerText = `Mileage: ${value}`;
         }
 
-        document.getElementById('predictionForm').addEventListener('submit', function(e) {
-        e.preventDefault(); // Prevent form submission
-
-        // Show loading modal
-        $('#loadingModal').modal('show');
-
-        // Collect form data
-        var formData = new FormData(this);
-
-        // Send AJAX request
-        fetch('/', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Hide loading modal
-            $('#loadingModal').modal('hide');
-            
-            // Show result modal
-            $('#predictionResult').text('Predicted Price: ₹' + data.prediction.toFixed(2));
-            $('#resultModal').modal('show');
-        })
-        .catch(error => {
-            // Hide loading modal
-            $('#loadingModal').modal('hide');
-            
-            // Show error modal
-            $('#predictionResult').text('Error occurred while predicting');
-            $('#resultModal').modal('show');
+        document.addEventListener('DOMContentLoaded', function() {
+            const predictForm = document.getElementById('predictForm');
+        
+            predictForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+        
+                // Show loading modal
+                const loadingModal = new bootstrap.Modal(document.getElementById('loadingModal'));
+                loadingModal.show();
+        
+                // Submit the form
+                e.target.submit();
+            });
         });
-    });
 
     </script>
 </body>
