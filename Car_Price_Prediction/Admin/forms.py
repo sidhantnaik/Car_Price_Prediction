@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
+from django.contrib.auth import authenticate
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(
@@ -16,6 +17,41 @@ class LoginForm(AuthenticationForm):
             attrs={'class': 'form-control', 'placeholder': 'Password'}
         )
     )
+
+    def clean(self):
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+
+        if username and password:
+            # Try to authenticate the user
+            self.user_cache = authenticate(username=username, password=password)
+            
+            # Check authentication result
+            if self.user_cache is None:
+                # Different error messages for different scenarios
+                try:
+                    # Check if username exists
+                    from django.contrib.auth.models import User
+                    user = User.objects.get(username=username)
+                    # Username exists, so password must be wrong
+                    raise forms.ValidationError(
+                        "Invalid password. Please try again.",
+                        code='invalid_password'
+                    )
+                except User.DoesNotExist:
+                    # Username doesn't exist
+                    raise forms.ValidationError(
+                        "Invalid username. The username does not exist.",
+                        code='invalid_username'
+                    )
+            elif not self.user_cache.is_active:
+                # User account is disabled
+                raise forms.ValidationError(
+                    "This account is inactive.",
+                    code='inactive_account'
+                )
+
+        return self.cleaned_data
 
 class RegisterForm(UserCreationForm):
     class Meta:

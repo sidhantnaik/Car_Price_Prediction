@@ -33,10 +33,6 @@ def index(request):
         print("POST")
         print("=="*30)
         return JsonResponse(prediction)
-    
-    print("=="*30)
-    print("GET")
-    print("=="*30)
 
     return render(request, 'index.html', context)
 
