@@ -1,88 +1,144 @@
 {% extends 'admin_base.html' %}
 
 {% block content %}
-<h1>Add New Car Data</h1>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        background: linear-gradient(120deg, #f3f4f6, #ffffff);
+    }
+    .form-card {
+        background: #ffffff;
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+    .form-header {
+        color: white;
+        text-align: center;
+        padding: 20px;
+    }
+    .form-header h2 {
+        margin: 0;
+        font-weight: 700;
+    }
+    .form-group label {
+        font-weight: 500;
+        color: #333333;
+    }
+    .form-group input,
+    .form-group select {
+        font-size: 16px;
+        border-radius: 8px;
+    }
+   
+    .btn-submit:hover {
+        background: linear-gradient(90deg, #4e73df, #1cc88a);
+    }
+</style>
 
-{% if message %}
-<div class="alert alert-success alert-dismissiible fade show">{{ message }}</div>
-{% endif %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10 col-md-10 ">
+            <div class="form-card">
+                <div class="form-header bg-primary">
+                    <h2><i class="fas fa-car"></i> Add New Car Data</h2>
+                </div>
+                <div class="p-4">
+                    {% if message %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="fas fa-check-circle"></i> {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endif %}
+                    <form method="post">
+                        {% csrf_token %}
 
-<form method="post">
-    {% csrf_token %}
-    <br><br>
-    <div class="form-group">
-        <label for="car_brand">Car Brand</label>
-        <input type="text" class="form-control" id="car_brand" name="car_brand" required placeholder="Maruti Swift Dzire VDI">
-    </div><br>
+                        <div class="form-group mb-3">
+                            <label for="car_brand">Car Brand</label>
+                            <input type="text" class="form-control" id="car_brand" name="car_brand" required placeholder="Maruti Swift Dzire VDI">
+                        </div>
 
-    <div class="form-group">
-        <label for="year">Year</label>
-        <input type="number" class="form-control" id="year" name="year" required placeholder="2014">
-    </div><br>
+                        <div class="form-group mb-3">
+                            <label for="year">Year</label>
+                            <input type="number" class="form-control" id="year" name="year" required placeholder="2014">
+                        </div>
 
-    <div class="form-group">
-        <label for="km">Kilometers Driven</label>
-        <input type="number" class="form-control" id="km" name="km" required placeholder="145500">
-    </div><br>
+                        <div class="form-group mb-3">
+                            <label for="km">Kilometers Driven</label>
+                            <input type="number" class="form-control" id="km" name="km" required placeholder="145500">
+                        </div>
 
-    <div class="form-group">
-        <label for="fuel_type">Fuel Type</label>
-        <select type="text" class="form-control" id="fuel_type" name="fuel_type" required >
-            <option value="Petrol">Petrol</option>
-            <option value="Diesel">Diesel</option>
-            <option value="CNG">CNG</option>
-            <option value="LPG">LPG</option>
-        </select>
-    </div><br>
+                        <div class="form-group mb-3">
+                            <label for="fuel_type">Fuel Type</label>
+                            <select class="form-select" id="fuel_type" name="fuel_type" required>
+                                <option value="" disabled selected>Choose Fuel Type</option>
+                                <option value="Petrol">Petrol</option>
+                                <option value="Diesel">Diesel</option>
+                                <option value="CNG">CNG</option>
+                                <option value="LPG">LPG</option>
+                            </select>
+                        </div>
 
-    <div class="form-group">
-        <label for="seller_type">Seller Type</label>
-        <select type="text" class="form-control" id="seller_type" name="seller_type" required>
-            <option value="Individual">Individual</option>
-            <option value="Dealer">Dealer</option>
-            <option value="Trustmark Dealer">Trustmark Dealer</option>
-        </select>
-    </div><br>
+                        <div class="form-group mb-3">
+                            <label for="seller_type">Seller Type</label>
+                            <select class="form-select" id="seller_type" name="seller_type" required>
+                                <option value="" disabled selected>Choose Seller Type</option>
+                                <option value="Individual">Individual</option>
+                                <option value="Dealer">Dealer</option>
+                                <option value="Trustmark Dealer">Trustmark Dealer</option>
+                            </select>
+                        </div>
 
-    <div class="form-group">
-        <label for="transmission">Transmission</label>
-        <select type="text" class="form-control" id="transmission" name="transmission" required>
-            <option value="Manual">Manual</option>
-            <option value="Automatic">Automatic</option>
-        </select>
-    </div><br>
+                        <div class="form-group mb-3">
+                            <label for="transmission">Transmission</label>
+                            <select class="form-select" id="transmission" name="transmission" required>
+                                <option value="" disabled selected>Choose Transmission</option>
+                                <option value="Manual">Manual</option>
+                                <option value="Automatic">Automatic</option>
+                            </select>
+                        </div>
 
-    <div class="form-group">
-        <label for="owner">Number of Owners</label>
-        <select type="text" class="form-control" id="owner" name="owner" required>
-            <option value="First Owner">First Owner</option>
-            <option value="Second Owner">Second Owner</option>
-            <option value="Third Owner">Third Owner</option>
-            <option value="Test Drive Car">Test Drive Car</option>
-        </select>
-    </div><br>
+                        <div class="form-group mb-3">
+                            <label for="owner">Number of Owners</label>
+                            <select class="form-select" id="owner" name="owner" required>
+                                <option value="" disabled selected>Choose Ownership Type</option>
+                                <option value="First Owner">First Owner</option>
+                                <option value="Second Owner">Second Owner</option>
+                                <option value="Third Owner">Third Owner</option>
+                                <option value="Test Drive Car">Test Drive Car</option>
+                            </select>
+                        </div>
 
-    <div class="form-group">
-        <label for="mileage">Mileage</label>
-        <input type="number" class="form-control" id="mileage" name="mileage" required placeholder="11.36 km/l">
-    </div><br>
+                        <div class="form-group mb-3">
+                            <label for="mileage">Mileage (km/l)</label>
+                            <input type="number" class="form-control" id="mileage" name="mileage" required placeholder="11.36">
+                        </div>
 
-    <div class="form-group">
-        <label for="engine">Engine</label>
-        <input type="number" class="form-control" id="engine" name="engine" required placeholder="1248 cc">
-    </div><br>
+                        <div class="form-group mb-3">
+                            <label for="engine">Engine (cc)</label>
+                            <input type="number" class="form-control" id="engine" name="engine" required placeholder="1248">
+                        </div>
 
-    <div class="form-group">
-        <label for="max_pow">Maximum Power</label>
-        <input type="number" class="form-control" id="max_pow" name="max_pow" required placeholder="88.5 bhp">
-    </div><br>
+                        <div class="form-group mb-3">
+                            <label for="max_pow">Maximum Power (bhp)</label>
+                            <input type="number" class="form-control" id="max_pow" name="max_pow" required placeholder="88.5">
+                        </div>
 
-    <div class="form-group">
-        <label for="seats">Number of Seats</label>
-        <input type="number" class="form-control" id="seats" name="seats" required placeholder="4">
+                        <div class="form-group mb-3">
+                            <label for="seats">Number of Seats</label>
+                            <input type="number" class="form-control" id="seats" name="seats" required placeholder="4">
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-submit btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <br><br><br>
-    <button type="submit" class="btn btn-primary text-center">Save</button>
-</form>
+</div>
 
 {% endblock %}

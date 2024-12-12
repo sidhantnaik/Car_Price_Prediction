@@ -5,8 +5,9 @@
 <div class="d-flex justify-content-center align-items-center" style="min-height: 80vh; padding-top: 10px;">
     <div class="container">
         <div class="card shadow-lg px-5">
-            <div class="card-header bg-info text-white text-center">
-                <h2 class="mx-4">Car Price Prediction</h2>
+            <div class="text-center">
+                <h1 class="text-info">Car Price Prediction</h1>
+                <p class="text-muted">Get an accurate prediction for your car's price based on its details.</p>
             </div>
             <br>
             <div class="card-body">
@@ -16,7 +17,7 @@
                         <!-- Car Brands Dropdown -->
                         <div class="form-group mb-4">
                             <label for="car_brand" class="form-label">Car Brand</label>
-                            <select name="car_brand">
+                            <select name="car_brand" class="form-control border-primary">
                                 <option value="" disabled selected>Select brand name</option>
                                 {% for key, value in car_brands.items %}
                                 <option value="{{ key }}">{{ value }}</option>
@@ -171,22 +172,9 @@
             </div>
         </div>
     </div>
-</div>>
-
-{% if prediction %}
-<div id="resultModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-        <div class="card shadow-lg">
-            <div class="card-header bg-info text-white text-center">
-                <h5 class="modal-title">Prediction Result</h5>
-            </div>
-            <div class="card-body text-center">
-                <p>Predicted Price: ₹{{ prediction }}</p>
-            </div>
-        </div>
-    </div>
 </div>
-{% endif %}
+
+
 
     <!-- JavaScript for Live Updates -->
     <script>
@@ -216,6 +204,38 @@
                 e.target.submit();
             });
         });
+        document.getElementById('predictionForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // Prevent form submission
+
+        // Show loading modal
+        $('#loadingModal').modal('show');
+
+        // Collect form data
+        var formData = new FormData(this);
+
+        // Send AJAX request
+        fetch('/', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Hide loading modal
+            $('#loadingModal').modal('hide');
+            
+            // Show result modal
+            $('#predictionResult').text('Predicted Price: ₹' + data.prediction.toFixed(2));
+            $('#resultModal').modal('show');
+        })
+        .catch(error => {
+            // Hide loading modal
+            $('#loadingModal').modal('hide');
+            
+            // Show error modal
+            $('#predictionResult').text('Error occurred while predicting');
+            $('#resultModal').modal('show');
+        });
+    });
 
     </script>
 </body>

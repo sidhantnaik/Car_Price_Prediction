@@ -1,69 +1,87 @@
 {% extends "base.html" %}
 
-{% block title %}About{% endblock title %}
+{% block title %}About My Project{% endblock title %}
 
 {% block body %}
 
-<body class="bg-light">
-    <div class="container py-5">
-        <!-- Page Header -->
-        <div class="text-center mb-5">
-            <h1 class="display-4 text-primary">About Us</h1>
-            <p class="lead text-secondary">Learn more about our project and the minds behind it.</p>
-        </div>
-
-        <!-- About Section -->
-        <div class="row justify-content-center">
-            <div class="col-md-10">
-                <div class="card shadow-lg mb-4">
-                    <div class="card-body">
-                        <h3 class="text-primary">Our Mission</h3>
-                        <p>
-                            Welcome to the <strong>Car Price Prediction</strong> project! Our mission is to provide an easy-to-use, 
-                            data-driven platform for estimating car resale values. Whether you are a car buyer, seller, or just curious, 
-                            this tool helps you make informed decisions by leveraging advanced machine learning models.
-                        </p>
-                        <h3 class="text-primary mt-4">Why Choose Us?</h3>
-                        <ul>
-                            <li>Accurate price predictions based on multiple parameters like brand, year, mileage, and more.</li>
-                            <li>Simple and intuitive interface designed for everyone.</li>
-                            <li>Built with state-of-the-art technologies to ensure reliability and speed.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- About the Developer -->
-                <div class="card shadow-lg">
-                    <div class="card-body">
-                        <h3 class="text-primary">Meet the Developer</h3>
-                        <div class="row align-items-center">
-                            <div class="col-md-4 text-center">
-                                <!-- Developer Profile Image -->
-                                <img src="\static\myimg.png" alt="Developer Profile" class="rounded-circle img-fluid shadow-sm mb-3">
-                            </div>
-                            <div class="col-md-8">
-                                <h4 class="mb-2">Sidhant Naik</h4>
-                                <p>
-                                    Hi! I'm Sidhant Naik, the developer behind this project. With a passion for technology and problem-solving, 
-                                    I created this tool to simplify the process of evaluating car resale values. My goal is to make predictive analytics 
-                                    accessible and user-friendly for everyone.
-                                </p>
-                                <p class="text-muted">
-                                    Feel free to reach out with suggestions, feedback, or collaboration ideas!
-                                </p>
-                                <p>
-                                    <a href="mailto:your_email@example.com" class="btn btn-outline-primary btn-sm me-2">Email Me</a>
-                                    <a href="https://www.linkedin.com/in/your-profile" target="_blank" class="btn btn-outline-secondary btn-sm">LinkedIn</a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<h1 class=" text-center">About</h1>
+<div style="border: 1px solid black; box-shadow: black 2px 3px 10px;padding: 7%;">
+<div id="about" class="about-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2 class="text-primary">Project Mission</h2>
+                <p>My project aims to provide accurate and reliable car price predictions to assist buyers and sellers in making informed decisions. By leveraging advanced algorithms and data analysis, I strive to ensure that the predictions are as precise as possible.</p>
+            </div>
+            <div class="col-md-6">
+                <h2 class="text-primary">About Me</h2>
+                <p>I am a passionate student specializing in data science and machine learning. This project is a culmination of my learning and practical application of these concepts.</p>
             </div>
         </div>
     </div>
-</body>
+</div>
+
+<div class="ml-model-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2 class="text-primary">Machine Learning Model</h2>
+                <p>The car price prediction model is built using the <strong>Random Forest Regressor</strong> algorithm. This ensemble learning method is effective for regression tasks and enhances prediction accuracy by combining multiple decision trees.</p>
+            </div>
+            <div class="col-md-6">
+                <h2 class="text-primary">Accuracy Model</h2>
+                <p>The model was trained on a diverse dataset containing various features related to car specifications, market trends, and historical prices. After extensive training and validation, the model achieved an impressive accuracy of <strong>93.03%</strong>, making it a reliable tool for predicting car prices.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="contact-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2 class="text-primary">Contact Me</h2>
+                <p>If you have any questions or would like to discuss my project, feel free to reach out:</p>
+                <ul class="list-unstyled">
+                    <li>Email: <a href="sidhantnaik102@gmail.com">sidhantnaik102@gmail.com</a></li>
+                    <li>Phone: <a href="tel:+8483021674">+91 8483021674</a></li>
+                    <li>Location: Kolhapur, Maharashtra</li>
+                </ul>
+            </div>
+            <div class="col-md-6" style="padding-left: 10%;">
+                <img src="static/logo.png" alt="My Project Image" class="img-fluid rounded-circle" style="width: 200px; height: 200px; margin-left: 10%;">
+                <p class="text-muted">A snapshot of my journey in machine learning.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Call to Action Section -->
+<div class="cta-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h2 class="text-primary">Get in Touch</h2>
+                <p>Feel free to reach out to me on social media:</p>
+                <a href="https://www.instagram.com/sidhant__100?igsh=cDMzZmM2MHlpeTJn" target="_blank" style="margin: 0 10px;">
+                    <i class="fab fa-instagram" style="font-size: 40px;"></i>
+                </a>
+                <a href="https://www.facebook.com/sidhant.naik.1800" target="_blank" style="margin: 0 10px;">
+                    <i class="fab fa-facebook" style="font-size: 40px;"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/yourprofile" target="_blank" style="margin: 0 10px;">
+                    <i class="fab fa-linkedin" style="font-size: 40px;"></i>
+                </a>
+                <a href="https://github.com/sidhantnaik" target="_blank" style="margin: 0 10px;">
+                    <i class="fab fa-github" style="font-size: 40px;"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
 {% endblock body %}
-
-
-  

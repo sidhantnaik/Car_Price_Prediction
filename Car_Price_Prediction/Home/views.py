@@ -29,18 +29,15 @@ def index(request):
         }
 
         prediction = data_getter.get_prediction(input_data)
-        print("=="*30)
-        print("POST")
-        print("=="*30)
         return JsonResponse(prediction)
 
     return render(request, 'index.html', context)
 
-
+@login_required
 def about(request):
-    messages.success(request,"ohh yeah !")
     return render(request,"about.html")
 
+@login_required
 def contact(request):
     if request.method == "POST":
         name = request.POST.get('name')
@@ -64,12 +61,12 @@ def signupUser(request):
         if form.is_valid():
             try:
                 user = form.save()
-                login(request, user)  # Automatically log in the user after signup
+                login(request, user)  
                 messages.success(request, "Account created successfully.")
-                return redirect("home:login")  # Redirect to login page
+                return redirect("home:login")  
             except Exception as e:
                 messages.error(request, f"An error occurred: {str(e)}")
-                form = RegisterForm(request.POST)  # Repopulate form with submitted data
+                form = RegisterForm(request.POST)  
     else:
         form = RegisterForm()
 

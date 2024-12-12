@@ -1,13 +1,15 @@
 from django.shortcuts import render
 from Home.helper import GETDATA
 import os,csv
+from django.contrib import messages
 from pathlib import Path
 from django.conf import settings
-
+from Admin.decorators import admin_required
 
 def admin_index(request):
     return render(request, 'admin_index.html')
 
+@admin_required
 def see_cars_data(request):
     data_getter = GETDATA()
     raw_context = data_getter.get_cars_data()
@@ -34,6 +36,7 @@ def see_cars_data(request):
 
 data_path = os.path.join(settings.BASE_DIR, 'Data', 'Cardetails.csv')
 
+@admin_required
 def add_new_car_data(request):
     if request.method == 'POST':
         data_getter = GETDATA()
@@ -56,6 +59,7 @@ def add_new_car_data(request):
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writerow(data)
 
-        return render(request, 'add_new_car_data.html', {'message': 'Car data added successfully!'})
+        messages.success(request,"Car data added successfully!")
+        return render(request, 'add_new_car_data.html')
 
     return render(request, 'add_new_car_data.html')

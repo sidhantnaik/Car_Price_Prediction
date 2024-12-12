@@ -1,5 +1,6 @@
 from pathlib import Path,os
 from django.contrib.messages import constants as messeges
+from .jazzmin import JAZZMIN_SETTINGS
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -10,6 +11,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
+    'jazzmin',
     'Home.apps.HomeConfig',
     'django.contrib.admin',
     'django.contrib.auth',

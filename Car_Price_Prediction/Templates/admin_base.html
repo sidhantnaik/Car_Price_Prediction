@@ -15,6 +15,21 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     
 </head>
+<style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 25px;
+            color: #f8f9fa !important;
+        }
+        nav
+        {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+        }
+
+    </style>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
@@ -38,8 +53,22 @@
                     </li>
                 </ul>
             </div>
+            <a class="text-white" href="/">Visit Site</a>
         </div>
     </nav>
+
+    {% if messages %}
+            <div class="row justify-content-center mt-4">
+                <div class="col-12 col-md-8 col-lg-6">
+                    {% for message in messages %}
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
 
     <div class="container my-5">
         {% block content %}{% endblock %}
